@@ -1,0 +1,71 @@
+name: Update WH Data Plugins
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update WH Channel Manager plugin
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTPS_SERVER }}
+          username: ${{ secrets.CM_CHANNEL_MGR_FTPS_USER }}
+          password: ${{ secrets.CM_CHANNEL_MGR_FTPS_PASS }}
+          protocol: ftps
+          port: 21
+          local-dir: ./wh-cm-channel-manager/
+          server-dir: ./
+          exclude: |
+            **/.git*
+            **/.github/**
+            **/.vscode/**
+            **/.idea/**
+            **/node_modules/**
+            **/tests/**
+            **/coverage/**
+            **/*.log
+            **/.env
+            **/.env.*
+            **/package-lock.json
+            **/package.json
+            **/webpack.config.js
+            **/vite.config.*
+            **/phpunit.xml*
+            **/.DS_Store
+            **/Thumbs.db
+
+      - name: Update WH User Roles plugin
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTPS_SERVER }}
+          username: ${{ secrets.CM_USER_ROLES_FTPS_USER }}
+          password: ${{ secrets.CM_USER_ROLES_FTPS_PASS }}
+          protocol: ftps
+          port: 21
+          local-dir: ./wh-cm-user-roles/
+          server-dir: ./
+          exclude: |
+            **/.git*
+            **/.github/**
+            **/.vscode/**
+            **/.idea/**
+            **/node_modules/**
+            **/tests/**
+            **/coverage/**
+            **/*.log
+            **/.env
+            **/.env.*
+            **/package-lock.json
+            **/package.json
+            **/webpack.config.js
+            **/vite.config.*
+            **/phpunit.xml*
+            **/.DS_Store
+            **/Thumbs.db

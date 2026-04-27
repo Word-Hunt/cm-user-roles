@@ -1,0 +1,15 @@
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[user]
+	name = wpp-jk
+	email = jason@wp-pro.me
+	password = Kinney12@@12@@
+[init]
+	defaultBranch = master
+
+[includeIf "gitdir:~/Local Sites/word-hunt/"]
+    path = ~/.gitconfig-wordhunt
+
