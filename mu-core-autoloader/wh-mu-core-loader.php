@@ -9,7 +9,9 @@
  *
  * @wordpress-plugin
  * Plugin Name: Word Hunt - Must Use Core Loader
- * Description: Word Hunt platform autoloader and shared core utilities. Loads before all other plugins.
+ * Description: Word Hunt platform autoloader and shared core utilities.
+ * Loads before all other plugins. Also support minor security and redirects.
+ *
  * Version:     1.0.0
  * Text Domain: word-hunt
  * License:     Proprietary - All Rights Reserved
@@ -30,11 +32,15 @@ if (!defined('ABSPATH')) {
 require_once __DIR__ . '/vendor/autoload.php';
 
 /**
- * Word Hunt platform version.
+ * WordPress file editing is intentionally disabled in wp-config.php.
  *
- * @var string
+ * This prevents theme and plugin files from being edited through
+ * the WordPress admin dashboard.
+ *
+ * Expected wp-config.php setting:
+ *
+ * define('DISALLOW_FILE_EDIT', true);
  */
-define('WH_VERSION', '1.0.1');
 
 /**
  * Absolute path to the wh-core plugin directory, with trailing slash.
@@ -46,7 +52,7 @@ define('WH_PATH', plugin_dir_path(__FILE__));
 add_action('init', 'word_hunt_vault_bouncer');
 
 /**
- * Redirects unauthorised requests away from vault-0.
+ * Redirects unauthorized requests away from vault-0.
  *
  * vault-0 is a headless internal WordPress instance with no public-facing
  * pages. Real access control is handled at the network layer by Cloudflare
